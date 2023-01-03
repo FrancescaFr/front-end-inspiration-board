@@ -1,0 +1,11 @@
+
+
+.boxed {
+    border: 1px solid black ;
+    overflow:scroll;
+    width: 275px;
+    height: 150px;
+    justify-content: left;
+    
+
+  }
