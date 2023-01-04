@@ -51,7 +51,7 @@ const handleBoardSubmit = (data) => {
   // this will call the api in the future
   console.log('data: ', data);
 };
-const kBaseUrl = 'http://localhost:5000';
+const kBaseUrl = 'https://oyster-inspiration-board.herokuapp.com/';
 
 const getAllBoardsApi = () =>{
  return axios.get(`${kBaseUrl}/boards`)
@@ -118,13 +118,13 @@ getAllBoardsApi()
           name="textValue"
          />
       <h1>Create a New Board</h1>
-      <NewBoardForm handleBoardSubmit={handleBoardSubmit} onShowCardForm={showCardForm}></NewBoardForm>
+      <NewBoardForm handleBoardSubmit={handleBoardSubmit} ></NewBoardForm>
       
      
      
       
-      <CardList cards={cards} onlikedCard={likedCard} boardData={boardData} ondeleteCard={deleteCard}showCardForm={showCardForm}/> 
-       <NewCardForm handleCardSubmit={handleCardSubmit} boardData={boardData}onShowCardForm={showCardForm} /> 
+      <CardList cards={cards} onlikedCard={likedCard} boardData={boardData} ondeleteCard={deleteCard}/> 
+       <NewCardForm handleCardSubmit={handleCardSubmit} boardData={boardData} /> 
       
       
       
