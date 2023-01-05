@@ -9,7 +9,8 @@ import NewCardForm from './components/NewCardForm';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-const boards = [{
+const boards = [
+  {
   id:1,
   title: 'New Board',
   clicked: false,
@@ -29,28 +30,22 @@ const boards = [{
 
 const cards = [
   {
-  id:1,
+  card_id:1,
   body: 'I am a card',
-  likes_count: 0,
-  board_id:2,
+  likes: 0,
+  board_id:3,
   
   },
   {
-  id:2,
+  card_id:2,
   body: 'I am another card',
-  likes_count: 0,
+  likes: 0,
   board_id:2,
     }
 
 ]
-const handleCardSubmit = (data) => {
-  console.log('data:',data);
-}
-const handleBoardSubmit = (data) => {
 
-  // this will call the api in the future
-  console.log('data: ', data);
-};
+
 const kBaseUrl = 'https://oyster-inspiration-board.herokuapp.com/';
 
 const getAllBoardsApi = () =>{
@@ -63,23 +58,71 @@ const getAllBoardsApi = () =>{
  })
 };
 
+const getAllCardsApi = () =>{
+  return axios.get(`${kBaseUrl}/cards`)
+  .then(response => {
+   return response.data;
+  })
+  .catch(err => {
+   console.log(err);
+  })
+ };
+
+const addNewBoardApi = (title) => {
+  const currentData = {title,}
+  return axios.post(`${kBaseUrl}/boards`, currentData)
+  .then(response => {
+    return response.data;
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
+
+const addNewCardApi = (body) => {
+  const currentData = {body,
+  likes: 0,
+  board_id:3
+}
+  return axios.post(`${kBaseUrl}/cards`, currentData)
+  .then(response => {
+    return response.data;
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
 function App() {
 const [boardData, setboardData] = useState([]);
 
+
+const getAllBoards = () => {
+  getAllBoardsApi()
+  .then(boards => {
+    setboardData(boards)
+  })
+};
+
+const getAllCards = () => {
+  getAllCardsApi()
+  .then(cards => {
+    setboardData(cards)
+  })
+};
+
 useEffect( () => {
 // data fetching code
-getAllBoardsApi()
-.then(boards => {
-  console.log(boards)
-})
+
+getAllBoards();
+
+
 }, []);
 
 
-
-  const likedCard = (id) => {
+  const likedCard = (card_id) => {
     setboardData(boardData => boardData.map(board => {
-      if(board.id === id) {
-        return {...board, likes_count: board.likes_count + 1}
+      if(board.id === card_id) {
+        return {...board, likes: board.likes + 1}
       } else {
         return board;
       }
@@ -90,18 +133,55 @@ getAllBoardsApi()
       return board.id !== id;
     }));
   };
-  const boardClick = (id) => {
-    setboardData(boardData => cards.filter(card => {
-      return card.board_id === id 
-    }))
+  const boardClick = (board_id) => {
+    getAllCardsApi()
+    .then(cards => {
+     
+       console.log(cards)
+  })
   };
+   
 
-  const showCardForm = () => {
-    return <NewCardForm />;
-  };
+
+  //   setboardData(boardData => cards.map(cards => {
+  //     if(cards.board_id === board_id) {
+  //       return {cards}
+  //     } else {
+  //       return cards
+  //     }
+  //   return getAllCards(board_id)
+  //   .then(cardResult => {
+  //   setboardData(boardData => boardData.map(card => {
+  //       if( card.board_id === cardResult.board.id){
+  //         return cardResult;
+  //       } else {
+  //         return card;
+  //       }
+      
+  //   }));
+  // }
+  // }
+    // setboardData(boardData => cards.filter(card => {
+    //   return card.board_id === board_id 
+    // }))
+  
+
+   const handleBoardSubmit = (data) => {
+  addNewBoardApi(data)
+  .then(newBoard => {
+    setboardData([...boardData, newBoard])
+    console.log('here')
+
+  })
+  .catch(e => console.log(e));
+};
 
   const handleCardSubmit = (data) => {
-    console.log('data:',data);
+    addNewCardApi(data)
+    .then(newCard => {
+      setboardData([...boardData,newCard])
+    })
+    .catch(e => console.log(e))
   }
   return (
     <div className="App">
@@ -109,31 +189,29 @@ getAllBoardsApi()
       <h1>Boards</h1>
      
       <div className='boxed'>
-     <Boards boards={boards} onboardClick={boardClick} onShowCardForm={showCardForm} ></Boards>
+     <Boards boardData={boardData} handleBoardSubmit={handleBoardSubmit} onboardClick={boardClick}  ></Boards>
      </div>
   
       
-      <h1> Selected Board</h1>
-      <input type="textarea" 
-          name="textValue"
-         />
+    
       <h1>Create a New Board</h1>
       <NewBoardForm handleBoardSubmit={handleBoardSubmit} ></NewBoardForm>
       
-     
-     
+         
+{/* <CardList  onlikedCard={likedCard} cardData={boardData} ondeleteCard={deleteCard} handleCardSubmit={handleCardSubmit}/>  */}
       
-      <CardList cards={cards} onlikedCard={likedCard} boardData={boardData} ondeleteCard={deleteCard}/> 
-       <NewCardForm handleCardSubmit={handleCardSubmit} boardData={boardData} /> 
+      <NewCardForm handleCardSubmit={handleCardSubmit}  /> 
+
       
-      
-      
-    
       
     
     </div>
-  );
-};
+  )}
+
+
+
+
+
 
 
 export default App;

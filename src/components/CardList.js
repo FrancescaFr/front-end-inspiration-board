@@ -5,20 +5,20 @@ import NewCardForm from './NewCardForm';
 
 
 const CardList = (props) => {
-  return props.boardData.map((board) => {
-   
+  return props.cardData.map((card) => {
+  
     return (
      
       <Card
-        key={board.id}
-        id={board.id}
-        body={board.body}
-        likes_count={board.likes_count}
-        board_id={board.board_id}
+        key={card.id}
+        card_id={card.id}
+        body={card.body}
+        likes={card.likes}
+        board_id={card.board_id}
         onlikedCard={props.onlikedCard}
         ondeleteCard={props.ondeleteCard}
         onboardClick={props.onboardClick}
-        onShowCardFrom={props.onShowCardFrom}
+    
         
         ></Card>
         
