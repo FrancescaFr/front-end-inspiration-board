@@ -9,16 +9,17 @@ import CardList from './CardList';
 
 const Boards = (props) => {
 
-
-  return props.boardData.map((board) => {
  
     return (
       
-      <p><button onClick={() => props.onboardClick(board.board_id)}>{board.board_id}.{board.title}  </button></p>
+      <p><button onClick={() => props.onboardClick(props.board_id)}>{props.board_id}.{props.title}  </button></p>
   
 
 
-    )})
-};
+    )};
 
+Boards.propTypes = {
+  title: PropTypes.string.isRequired,
+ 
+}
 export default Boards;

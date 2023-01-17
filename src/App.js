@@ -2,6 +2,7 @@ import './App.css';
 import Boards from './components/Board';
 import PropTypes from 'prop-types';
 import CardList from './components/CardList';
+import BoardList from './components/BoardList';
 import Card from './components/Card';
 import NewBoardForm from './components/NewBoardForm';
 import {useState } from 'react';
@@ -9,41 +10,6 @@ import NewCardForm from './components/NewCardForm';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-const boards = [
-  {
-  id:1,
-  title: 'New Board',
-  clicked: false,
-},
-{
-  id:2,
-  title: 'another Board',
-  clicked: false
-},
-{
-  id:3,
-  title:'a Board',
-  clicked:false
-},
-  
-];
-
-const cards = [
-  {
-  card_id:1,
-  body: 'I am a card',
-  likes: 0,
-  board_id:3,
-  
-  },
-  {
-  card_id:2,
-  body: 'I am another card',
-  likes: 0,
-  board_id:2,
-    }
-
-]
 
 
 const kBaseUrl = 'https://oyster-inspiration-board.herokuapp.com/';
@@ -58,9 +24,10 @@ const getAllBoardsApi = () =>{
  })
 };
 
-const getAllCardsApi = () =>{
-  return axios.get(`${kBaseUrl}/cards`)
+const getAllCardsApi = (board_id) => {
+  return axios.get(`${kBaseUrl}/boards/${board_id}/cards`)
   .then(response => {
+    console.log(response.data)
    return response.data;
   })
   .catch(err => {
@@ -69,7 +36,7 @@ const getAllCardsApi = () =>{
  };
 
 const addNewBoardApi = (title) => {
-  const currentData = {title,}
+  const currentData = {title}
   return axios.post(`${kBaseUrl}/boards`, currentData)
   .then(response => {
     return response.data;
@@ -82,7 +49,7 @@ const addNewBoardApi = (title) => {
 const addNewCardApi = (body) => {
   const currentData = {body,
   likes: 0,
-  board_id:3
+  board_id: 3
 }
   return axios.post(`${kBaseUrl}/cards`, currentData)
   .then(response => {
@@ -92,12 +59,38 @@ const addNewCardApi = (body) => {
     console.log(err);
   })
 }
+
+const likeCardApi = (card_id) => {
+  return axios.patch(`${kBaseUrl}/cards/${card_id}`)
+  .then(response => {
+    console.log(response.data)
+  })
+  .catch(err => {
+    console.log(err)
+  });
+}
+
+  const deleteCardApi = (card_id) => {
+    return axios.delete(`${kBaseUrl}/cards/${card_id}`)
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(err => {
+      console.log(err)
+    });
+    }
+  
+
 function App() {
 const [boardData, setboardData] = useState([]);
+const [cardData, setCardData] = useState([]);
+const [handlelike, sethandleLike] = useState(0)
+
+
 
 
 const getAllBoards = () => {
-  getAllBoardsApi()
+   getAllBoardsApi()
   .then(boards => {
     setboardData(boards)
   })
@@ -106,7 +99,7 @@ const getAllBoards = () => {
 const getAllCards = () => {
   getAllCardsApi()
   .then(cards => {
-    setboardData(cards)
+    setCardData(cards)
   })
 };
 
@@ -116,61 +109,47 @@ useEffect( () => {
 getAllBoards();
 
 
-}, []);
+}, [boardData]);
 
 
-  const likedCard = (card_id) => {
-    setboardData(boardData => boardData.map(board => {
-      if(board.id === card_id) {
-        return {...board, likes: board.likes + 1}
+const likedCard = (card_id) => {
+likeCardApi(card_id)
+.then(likeResult => {
+  
+    setCardData(handleLike => cardData.map(card => {
+      if(card.card_id !== card_id) {
+        return {...card, likes: card.likes + 1}
       } else {
-        return board;
+        return card;
+   
       }
     }));
-  }
-  const deleteCard = id => {
-    setboardData(boardData => boardData.filter(board => {
-      return board.id !== id;
+  })
+}
+  
+
+
+  const deleteCard = card_id => {
+    deleteCardApi(card_id)
+    setCardData(cardData => cardData.filter(card => {
+      return card.card_id !== card_id;
     }));
   };
   const boardClick = (board_id) => {
-    getAllCardsApi()
-    .then(cards => {
-     
-       console.log(cards)
+    getAllCardsApi(board_id)
+    .then(board => {
+       setCardData(board.cards)
+      
+       
+       
   })
   };
-   
-
-
-  //   setboardData(boardData => cards.map(cards => {
-  //     if(cards.board_id === board_id) {
-  //       return {cards}
-  //     } else {
-  //       return cards
-  //     }
-  //   return getAllCards(board_id)
-  //   .then(cardResult => {
-  //   setboardData(boardData => boardData.map(card => {
-  //       if( card.board_id === cardResult.board.id){
-  //         return cardResult;
-  //       } else {
-  //         return card;
-  //       }
-      
-  //   }));
-  // }
-  // }
-    // setboardData(boardData => cards.filter(card => {
-    //   return card.board_id === board_id 
-    // }))
-  
 
    const handleBoardSubmit = (data) => {
-  addNewBoardApi(data)
+    addNewBoardApi(data)
   .then(newBoard => {
     setboardData([...boardData, newBoard])
-    console.log('here')
+  
 
   })
   .catch(e => console.log(e));
@@ -178,10 +157,17 @@ getAllBoards();
 
   const handleCardSubmit = (data) => {
     addNewCardApi(data)
+    
     .then(newCard => {
-      setboardData([...boardData,newCard])
+
+       console.log(newCard)
+   
+      setCardData([...cardData,newCard])  
+      // getAllCards()
+ 
+  //  response is currently - card # created 
     })
-    .catch(e => console.log(e))
+  .catch(e => console.log(e))
   }
   return (
     <div className="App">
@@ -189,7 +175,7 @@ getAllBoards();
       <h1>Boards</h1>
      
       <div className='boxed'>
-     <Boards boardData={boardData} handleBoardSubmit={handleBoardSubmit} onboardClick={boardClick}  ></Boards>
+     <BoardList boardData={boardData} handleBoardSubmit={handleBoardSubmit} onboardClick={boardClick}  ></BoardList>
      </div>
   
       
@@ -198,9 +184,9 @@ getAllBoards();
       <NewBoardForm handleBoardSubmit={handleBoardSubmit} ></NewBoardForm>
       
          
-{/* <CardList  onlikedCard={likedCard} cardData={boardData} ondeleteCard={deleteCard} handleCardSubmit={handleCardSubmit}/>  */}
+<CardList  onlikedCard={likedCard} cardData={cardData} ondeleteCard={deleteCard} handleCardSubmit={handleCardSubmit}/> 
       
-      <NewCardForm handleCardSubmit={handleCardSubmit}  /> 
+       <NewCardForm handleCardSubmit={handleCardSubmit}  />  
 
       
       

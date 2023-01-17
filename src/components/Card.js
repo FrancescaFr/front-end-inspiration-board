@@ -25,4 +25,11 @@ const Card = (props) => {
 )
 };
 
+Card.propTypes = {
+  likes: PropTypes.number.isRequired,
+  body: PropTypes.string.isRequired,
+  board_id: PropTypes.number.isRequired,
+  card_id: PropTypes.number.isRequired,
+}
+
 export default Card;
