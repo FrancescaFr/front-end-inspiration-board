@@ -84,7 +84,7 @@ const likeCardApi = (card_id) => {
     .catch(err => {
       console.log(err)
     })
-  );
+  
 };
   
 
@@ -162,6 +162,20 @@ const likedCard = (card_id) => {
   .catch(e => console.log(e));
 };
 
+   const handleCardSubmit = (newCardMessage) => {
+    addNewCardApi(newCardMessage)
+
+    .then(newCard => {
+
+      console.log(newCard)
+
+      setCardData([...cardData, newCard])
+      
+
+      //  response is currently - card # created 
+    })
+    .catch(e => console.log(e))
+}
 
   return (
     <div className="App">
