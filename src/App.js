@@ -1,84 +1,95 @@
 import './App.css';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+// COMPONENTS
 import Boards from './components/Board';
-import PropTypes from 'prop-types';
-import CardList from './components/CardList';
 import BoardList from './components/BoardList';
 import Card from './components/Card';
+import CardList from './components/CardList';
 import NewBoardForm from './components/NewBoardForm';
-import {useState } from 'react';
 import NewCardForm from './components/NewCardForm';
-import { useEffect } from 'react';
-import axios from 'axios';
-
 
 
 const kBaseUrl = 'https://oyster-inspiration-board.herokuapp.com/';
 
-const getAllBoardsApi = () =>{
- return axios.get(`${kBaseUrl}/boards`)
- .then(response => {
-  return response.data;
- })
- .catch(err => {
-  console.log(err);
- })
+const getAllBoardsApi = () => {
+  return (
+    axios.get(`${kBaseUrl}/boards`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  );
 };
 
 const getAllCardsApi = (board_id) => {
-  return axios.get(`${kBaseUrl}/boards/${board_id}/cards`)
-  .then(response => {
-    console.log(response.data)
-   return response.data;
-  })
-  .catch(err => {
-   console.log(err);
-  })
- };
+  return (
+    axios.get(`${kBaseUrl}/boards/${board_id}/cards`)
+    .then(response => {
+      console.log(response.data)
+    return response.data;
+    })
+    .catch(err => {
+    console.log(err);
+    })
+  );
+};
 
 const addNewBoardApi = (title) => {
   const currentData = {title}
-  return axios.post(`${kBaseUrl}/boards`, currentData)
-  .then(response => {
-    return response.data;
-  })
-  .catch(err => {
-    console.log(err);
-  })
-}
+  return (
+    axios.post(`${kBaseUrl}/boards`, currentData)
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  );
+};
 
 const addNewCardApi = (body) => {
-  const currentData = {body,
-  likes: 0,
-  board_id: 3
-}
-  return axios.post(`${kBaseUrl}/cards`, currentData)
-  .then(response => {
-    return response.data;
-  })
-  .catch(err => {
-    console.log(err);
-  })
-}
+  const currentData = {
+    body,
+    likes: 0,
+    board_id: 3
+  };
+  return (
+    axios.post(`${kBaseUrl}/cards`, currentData)
+    .then(response => {
+      return response.data;
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  );
+};
 
 const likeCardApi = (card_id) => {
-  return axios.patch(`${kBaseUrl}/cards/${card_id}`)
-  .then(response => {
-    console.log(response.data)
-  })
-  .catch(err => {
-    console.log(err)
-  });
-}
-
-  const deleteCardApi = (card_id) => {
-    return axios.delete(`${kBaseUrl}/cards/${card_id}`)
+  return (
+    axios.patch(`${kBaseUrl}/cards/${card_id}`)
     .then(response => {
       console.log(response.data)
     })
     .catch(err => {
       console.log(err)
-    });
-    }
+    })
+  );
+};
+
+const deleteCardApi = (card_id) => {
+  return (
+    axios.delete(`${kBaseUrl}/cards/${card_id}`)
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  );
+};
   
 
 function App() {
@@ -126,8 +137,6 @@ likeCardApi(card_id)
     }));
   })
 }
-  
-
 
   const deleteCard = card_id => {
     deleteCardApi(card_id)
@@ -135,14 +144,12 @@ likeCardApi(card_id)
       return card.card_id !== card_id;
     }));
   };
+
   const boardClick = (board_id) => {
     getAllCardsApi(board_id)
     .then(board => {
-       setCardData(board.cards)
-      
-       
-       
-  })
+      setCardData(board.cards)
+    })
   };
 
    const handleBoardSubmit = (data) => {
