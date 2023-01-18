@@ -8,12 +8,13 @@ import CardList from './CardList';
 
 
 const Boards = (props) => {
-
+  return (
  
-    return (
+    
       
       <p><button onClick={() => props.onboardClick(props.board_id)}>{props.board_id}.{props.title}  </button></p>
-  
+   
+   
 
 
     )};

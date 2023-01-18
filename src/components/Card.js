@@ -7,7 +7,9 @@ import NewCardForm from './NewCardForm';
 const Card = (props) => {
   
   return(
+  
    <div>
+    
   <div><section></section></div>
   
 
@@ -18,17 +20,18 @@ const Card = (props) => {
     <button className='delete_card' onClick={() => props.ondeleteCard(props.card_id)} >Delete</button>
     <button onClick={() => props.onlikedCard(props.card_id)}>+1</button>
     </section>
+  
   </div>
   
 
 
 )
 };
-
+<NewCardForm/>
 Card.propTypes = {
   likes: PropTypes.number.isRequired,
   body: PropTypes.string.isRequired,
-  board_id: PropTypes.number.isRequired,
+  // board_id: PropTypes.number.isRequired,
   card_id: PropTypes.number.isRequired,
 }
 

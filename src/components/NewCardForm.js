@@ -1,15 +1,16 @@
 import { useState } from "react"
 
-const NewCardForm = ({handleCardSubmit}) => {
+const NewCardForm = ({handleCardSubmit, currentBoard}) => {
   const [newCard, setnewCard] = useState('')
   
   const handleNewCard = (event) => {
-  setnewCard(event.target.value);
+  setnewCard(event.target.value)
+  
   };
 
   const handleSubmitCard = (event) => {
    event.preventDefault();
-   handleCardSubmit(newCard)
+   handleCardSubmit(newCard, currentBoard)
    setnewCard('');
   }
   return(

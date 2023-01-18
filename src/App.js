@@ -27,13 +27,15 @@ const getAllBoardsApi = () =>{
 const getAllCardsApi = (board_id) => {
   return axios.get(`${kBaseUrl}/boards/${board_id}/cards`)
   .then(response => {
-    console.log(response.data)
+    console.log(response.data.board_id)
    return response.data;
   })
   .catch(err => {
    console.log(err);
   })
  };
+
+
 
 const addNewBoardApi = (title) => {
   const currentData = {title}
@@ -46,14 +48,17 @@ const addNewBoardApi = (title) => {
   })
 }
 
-const addNewCardApi = (body) => {
+const addNewCardApi = (body, currentBoard) => {
   const currentData = {body,
-  likes: 0,
-  board_id: 3
-}
+  likes:0,
+board_id: 2}
+  
+
   return axios.post(`${kBaseUrl}/cards`, currentData)
   .then(response => {
+   
     return response.data;
+    
   })
   .catch(err => {
     console.log(err);
@@ -61,9 +66,10 @@ const addNewCardApi = (body) => {
 }
 
 const likeCardApi = (card_id) => {
-  return axios.patch(`${kBaseUrl}/cards/${card_id}`)
+
+  return axios.patch(`${kBaseUrl}cards/${card_id}/like`)
   .then(response => {
-    console.log(response.data)
+    return response.data;
   })
   .catch(err => {
     console.log(err)
@@ -73,7 +79,7 @@ const likeCardApi = (card_id) => {
   const deleteCardApi = (card_id) => {
     return axios.delete(`${kBaseUrl}/cards/${card_id}`)
     .then(response => {
-      console.log(response.data)
+      console.log(response.data);
     })
     .catch(err => {
       console.log(err)
@@ -84,7 +90,8 @@ const likeCardApi = (card_id) => {
 function App() {
 const [boardData, setboardData] = useState([]);
 const [cardData, setCardData] = useState([]);
-const [handlelike, sethandleLike] = useState(0)
+const [currentBoard, setCurrentBoard] = useState([]);
+// const [handlelike, sethandleLike] = useState(0)
 
 
 
@@ -113,19 +120,19 @@ getAllBoards();
 
 
 const likedCard = (card_id) => {
-likeCardApi(card_id)
-.then(likeResult => {
-  
-    setCardData(handleLike => cardData.map(card => {
-      if(card.card_id !== card_id) {
-        return {...card, likes: card.likes + 1}
-      } else {
-        return card;
-   
-      }
-    }));
-  })
+ return likeCardApi(card_id)
+ .then (likeResult => {
+  setCardData(cardData => cardData.map(card => {
+    if (card.card_id === likeResult.card_id) {
+      return likeResult
+    }else {
+      return card
+    }
+ }))
+})
 }
+        
+
   
 
 
@@ -135,14 +142,36 @@ likeCardApi(card_id)
       return card.card_id !== card_id;
     }));
   };
+
+  const handleCardSubmit = (newCardMessage,currentBoard) => {
+   
+    addNewCardApi(newCardMessage, currentBoard)
+
+    .then(newCard => {
+       setCardData([...cardData, newCard])
+    
+       console.log(cardData)
+     
+      
+    
+    
+  
+    })
+    .catch(e => console.log(e));
+  };
   const boardClick = (board_id) => {
+ 
     getAllCardsApi(board_id)
     .then(board => {
        setCardData(board.cards)
-      
+      //  console.log(cardData)
+      //  console.log([boardData])
+      //  setboardId(board_id)
        
        
-  })
+       
+  } )
+ 
   };
 
    const handleBoardSubmit = (data) => {
@@ -155,27 +184,14 @@ likeCardApi(card_id)
   .catch(e => console.log(e));
 };
 
-  const handleCardSubmit = (data) => {
-    addNewCardApi(data)
-    
-    .then(newCard => {
 
-       console.log(newCard)
-   
-      setCardData([...cardData,newCard])  
-      // getAllCards()
- 
-  //  response is currently - card # created 
-    })
-  .catch(e => console.log(e))
-  }
   return (
     <div className="App">
       <header className="App-header">Inspiration Board</header>
       <h1>Boards</h1>
      
       <div className='boxed'>
-     <BoardList boardData={boardData} handleBoardSubmit={handleBoardSubmit} onboardClick={boardClick}  ></BoardList>
+     <BoardList boardData={boardData} handleBoardSubmit={handleBoardSubmit} onboardClick={boardClick} handleCardSubmit={handleCardSubmit} ></BoardList>
      </div>
   
       
@@ -186,7 +202,7 @@ likeCardApi(card_id)
          
 <CardList  onlikedCard={likedCard} cardData={cardData} ondeleteCard={deleteCard} handleCardSubmit={handleCardSubmit}/> 
       
-       <NewCardForm handleCardSubmit={handleCardSubmit}  />  
+          <NewCardForm handleCardSubmit={handleCardSubmit} currentBoard={currentBoard} />   
 
       
       
