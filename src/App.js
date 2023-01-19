@@ -185,51 +185,58 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">Inspiration Board</header>
-      <h1>Boards</h1>
-
-      <div className="boxed">
-        <BoardList
-          boardData={boardData}
-          handleBoardSubmit={handleBoardSubmit}
-          onboardClick={boardClick}
-          handleCardSubmit={handleCardSubmit}
-        ></BoardList>
+      <header className="app-header">Inspiration Board</header>
+      <div className="App-container">
+        <section className="boards-container">
+          <h1>Boards</h1>
+          <p className="board-list-display">
+            <BoardList
+              boardData={boardData}
+              handleBoardSubmit={handleBoardSubmit}
+              onboardClick={boardClick}
+              handleCardSubmit={handleCardSubmit}
+            ></BoardList>
+          </p>
+        </section>
+        <section className="selected-board-display">
+          <h1>Selected Board </h1>
+          <p id="current-board-name">
+            {/* ternary not working */}
+            {currentBoardID
+              ? `${currentBoardTitle}`
+              : `Select a board to see
+            content`}
+          </p>
+          <button onClick={() => deleteBoard()}>Delete Board</button>
+        </section>
+        <section className="new-board-form">
+          <h1>Create a New Board</h1>
+          <NewBoardForm handleBoardSubmit={handleBoardSubmit}></NewBoardForm>
+        </section>
+        <section className="create-new-card-display">
+          {/* add ternary here */}
+          {/* currentBoardID ? cards for: {current board title} : select a board to add new cards */}
+          <h3>
+            {" "}
+            {currentBoardID
+              ? `${currentBoardTitle}`
+              : "Select a board to add new cards"}
+          </h3>
+          <NewCardForm
+            handleCardSubmit={handleCardSubmit}
+            currentBoardID={currentBoardID}
+          />
+        </section>
+        <section className="cards-container">
+          <CardList
+            onlikedCard={likedCard}
+            cardData={cardData}
+            ondeleteCard={deleteCard}
+            handleCardSubmit={handleCardSubmit}
+          />
+        </section>
       </div>
-
-      <h1>
-        {currentBoardID}. {currentBoardTitle}
-        <button onClick={() => deleteBoard()}>Delete Board</button>
-      </h1>
-
-      <h1>Create a New Board</h1>
-      <NewBoardForm handleBoardSubmit={handleBoardSubmit}></NewBoardForm>
-
-      <CardList
-        onlikedCard={likedCard}
-        cardData={cardData}
-        ondeleteCard={deleteCard}
-        handleCardSubmit={handleCardSubmit}
-      />
-
-      <NewCardForm
-        handleCardSubmit={handleCardSubmit}
-        currentBoardID={currentBoardID}
-      />
     </div>
   );
 }
-
 export default App;
-
-// <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
