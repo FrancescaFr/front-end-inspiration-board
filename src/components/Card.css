@@ -1,0 +1,12 @@
+.individual-card {
+  /* background-color: rgb(7, 169, 153, .4); */
+  box-shadow: inset 0 0 030px rgba(255, 255, 255, 0.5);
+  min-height: 200px;
+  max-height: 200px;
+  min-width: 200px;
+  align-items: center;
+  padding: 3rem;
+  border-radius: 50%;
+  background: transparent;
+  justify-content: space-between;
+};
