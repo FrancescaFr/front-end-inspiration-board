@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useState } from "react";
+import "./Forms.css";
 
 const NewBoardForm = ({ handleBoardSubmit }) => {
-  const [newBoard, setnewBoard] = useState('');
+  const [newBoard, setnewBoard] = useState("");
 
   const handleNewBoard = (event) => {
     setnewBoard(event.target.value);
@@ -9,17 +10,23 @@ const NewBoardForm = ({ handleBoardSubmit }) => {
 
   const handleSubmitBoard = (event) => {
     event.preventDefault();
-    handleBoardSubmit(newBoard)
-    setnewBoard('');
+    handleBoardSubmit(newBoard);
+    setnewBoard("");
   };
 
   return (
-    <form onSubmit={handleSubmitBoard} >
+    <form onSubmit={handleSubmitBoard}>
       <div>
-        <input type="text" id='title' name="title"
-          value={newBoard} onChange={handleNewBoard} placeholder="Add New Board" />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={newBoard}
+          onChange={handleNewBoard}
+          placeholder="Add New Board"
+        />
         <div>
-          <input type='submit' value="Submit New Board" />
+          <input type="submit" value="Submit New Board" />
         </div>
       </div>
     </form>
