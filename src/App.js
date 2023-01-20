@@ -100,7 +100,7 @@ function App() {
   const [boardData, setboardData] = useState([]);
   const [cardData, setCardData] = useState([]);
   const [currentBoardID, setCurrentBoardID] = useState([]);
-  const [currentBoardTitle, setCurrentBoardTitle] = useState([]);
+  const [currentBoardTitle, setCurrentBoardTitle] = useState(["Select a board to see content"]);
   // const [handlelike, sethandleLike] = useState(0)
 
   const getAllBoards = () => {
@@ -202,10 +202,7 @@ function App() {
           <h1>Selected Board </h1>
           <p id="current-board-name">
             {/* ternary not working */}
-            {currentBoardID
-              ? `${currentBoardTitle}`
-              : `Select a board to see
-            content`}
+            {currentBoardTitle}
           </p>
           <button onClick={() => deleteBoard()}>Delete Board</button>
         </section>
