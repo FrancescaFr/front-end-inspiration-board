@@ -183,7 +183,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="app-header">Inspiration Board</header>
+      <header className="app-header">The World is your Oyster</header>
       <div className="App-container">
         <section className="boards-container">
           <h1>Boards</h1>
