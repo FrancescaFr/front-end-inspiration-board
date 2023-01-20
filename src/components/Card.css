@@ -1,5 +1,5 @@
  /* Hide scrollbar for Chrome, Safari and Opera */
- .individual-card::-webkit-scrollbar {
+.individual-card::-webkit-scrollbar {
   display: none;
 }
 

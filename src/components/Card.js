@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NewCardForm from "./NewCardForm";
 import "./Card.css";
 
 const Card = (props) => {
@@ -23,8 +22,6 @@ const Card = (props) => {
     </div>
   );
 };
-
-{/* <NewCardForm />; */ }
 
 Card.propTypes = {
   likes: PropTypes.number.isRequired,

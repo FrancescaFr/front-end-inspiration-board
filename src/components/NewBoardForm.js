@@ -23,9 +23,7 @@ const NewBoardForm = ({ handleBoardSubmit }) => {
         </div>
       </div>
     </form>
-  )
+  );
 };
-
-
 
 export default NewBoardForm;

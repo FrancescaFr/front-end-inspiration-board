@@ -2,9 +2,7 @@ import "./App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 // COMPONENTS
-import Boards from "./components/Board";
 import BoardList from "./components/BoardList";
-import Card from "./components/Card";
 import CardList from "./components/CardList";
 import NewBoardForm from "./components/NewBoardForm";
 import NewCardForm from "./components/NewCardForm";
@@ -101,7 +99,6 @@ function App() {
   const [cardData, setCardData] = useState([]);
   const [currentBoardID, setCurrentBoardID] = useState([]);
   const [currentBoardTitle, setCurrentBoardTitle] = useState(["Select a board to see content"]);
-  // const [handlelike, sethandleLike] = useState(0)
 
   const getAllBoards = () => {
     getAllBoardsApi().then((boards) => {
@@ -117,7 +114,6 @@ function App() {
 
   useEffect(() => {
     // data fetching code
-
     getAllBoards();
   }, [boardData]);
 
@@ -143,7 +139,7 @@ function App() {
       })
     );
   };
-  // function incomplete, building get board api
+
   const deleteBoard = () => {
     getAllCardsApi(currentBoardID).then((boardData) => {
       boardData.cards.map((card) => {
@@ -185,7 +181,6 @@ function App() {
 
   return (
     <div className="App">
-
       <header className="app-header">Inspiration Board</header>
       <div className="App-container">
         <section className="boards-container">
@@ -251,4 +246,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
