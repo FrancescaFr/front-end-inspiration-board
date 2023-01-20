@@ -16,9 +16,8 @@ const NewCardForm = ({ handleCardSubmit, currentBoardID }) => {
   return (
     <form onSubmit={handleSubmitCard} >
       <div>
-        <label htmlFor="title">New Card:</label>
-        <input type="text" id='title' name="title" value={newCard} onChange={handleNewCard} />
-        <div><input type="submit" value="Add New Card" /></div>
+        <input type="text" id='title' name="title" value={newCard} placeholder='Add New Card Here' onChange={handleNewCard}></input>
+        <div><input type="submit" value="Submit" /></div>
       </div>
     </form>
   )

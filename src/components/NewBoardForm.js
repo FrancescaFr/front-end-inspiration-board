@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const NewBoardForm = ({handleBoardSubmit}) => {
+const NewBoardForm = ({ handleBoardSubmit }) => {
   const [newBoard, setnewBoard] = useState('');
 
   const handleNewBoard = (event) => {
@@ -16,16 +16,15 @@ const NewBoardForm = ({handleBoardSubmit}) => {
   return (
     <form onSubmit={handleSubmitBoard} >
       <div>
-        <label htmlFor="title">New Board Title:</label>
-        <input type="text" id='title' name="title" 
-        value={newBoard} onChange={handleNewBoard} />
+        <input type="text" id='title' name="title"
+          value={newBoard} onChange={handleNewBoard} placeholder="Enter New Board Title Here" />
         <div>
-          <input type='submit' value="Add New Board"/>
+          <input type='submit' value="Submit New Board" />
         </div>
       </div>
     </form>
   )
-  };
+};
 
 
 

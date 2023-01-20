@@ -85,7 +85,7 @@ h1 {
 
 .cards-container {
     margin-bottom: 2%;
-    display: flex;
+    display: grid;
     margin: 4%;
     padding: 10px;
     justify-content: space-evenly;
