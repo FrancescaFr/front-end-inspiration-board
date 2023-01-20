@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from "react";
+import "./Forms.css";
 
 const NewCardForm = ({ handleCardSubmit, currentBoardID }) => {
   const [newCard, setnewCard] = useState('')
