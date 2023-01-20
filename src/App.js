@@ -185,6 +185,7 @@ function App() {
 
   return (
     <div className="App">
+
       <header className="app-header">Inspiration Board</header>
       <div className="App-container">
         <section className="boards-container">
@@ -206,15 +207,15 @@ function App() {
           <button onClick={() => deleteBoard()}>Delete Board</button>
           <div className="create-new-card-display">
             {currentBoardTitle == "Select a board to see content"
-            ? "Select a board to add a card"
-            : <NewCardForm
-              handleCardSubmit={handleCardSubmit}
-              currentBoardID={currentBoardID}
-            />}
+              ? "Select a board to add a card"
+              : <NewCardForm
+                handleCardSubmit={handleCardSubmit}
+                currentBoardID={currentBoardID}
+              />}
           </div>
         </section>
         <section className="new-board-form">
-          <h1>Create a New Board</h1>
+          <h1>New Board Form</h1>
           <NewBoardForm handleBoardSubmit={handleBoardSubmit}></NewBoardForm>
         </section>
         {/* {<section className="create-new-card-display">
@@ -234,8 +235,8 @@ function App() {
         <section className="create-new-card-display">
           <h1>
             {currentBoardTitle == "Select a board to see content"
-            ? "Choose a board from the list!"
-            : `Cards for ${currentBoardTitle}`}
+              ? "Choose a board from the list!"
+              : `Cards for ${currentBoardTitle}`}
           </h1>
         </section>
         <section className="cards-container">
