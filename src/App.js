@@ -141,11 +141,13 @@ function App() {
   };
 
   const deleteBoard = () => {
-    getAllCardsApi(currentBoardID).then((boardData) => {
-      boardData.cards.map((card) => {
-        deleteCard(card.card_id);
+    getAllCardsApi(currentBoardID)
+      .then((boardData) => {
+        //might need to change from map to another iterator that doesn't return object
+        boardData.cards.map((card) => {
+          deleteCard(card.card_id);
+        });
       });
-    });
     deleteBoardApi(currentBoardID);
     setCurrentBoardID([]);
     setCurrentBoardTitle([]);
@@ -201,7 +203,7 @@ function App() {
           </p>
           <button onClick={() => deleteBoard()}>Delete Board</button>
           <div className="create-new-card-display">
-            {currentBoardTitle == "Select a board to see content"
+            {currentBoardTitle === "Select a board to see content"
               ? "Select a board to add a card"
               : <NewCardForm
                 handleCardSubmit={handleCardSubmit}
@@ -229,7 +231,7 @@ function App() {
         </section>} */}
         <section className="create-new-card-display">
           <h1>
-            {currentBoardTitle == "Select a board to see content"
+            {currentBoardTitle === "Select a board to see content"
               ? "Choose a board from the list!"
               : `Cards for ${currentBoardTitle}`}
           </h1>
