@@ -203,7 +203,7 @@ function App() {
           </p>
           <button onClick={() => deleteBoard()}>Delete Board</button>
           <div className="create-new-card-display">
-            {currentBoardTitle === "Select a board to see content"
+            {currentBoardTitle == "Select a board to see content"
               ? "Select a board to add a card"
               : <NewCardForm
                 handleCardSubmit={handleCardSubmit}
@@ -218,7 +218,7 @@ function App() {
 
         <section className="create-new-card-display">
           <h1>
-            {currentBoardTitle === "Select a board to see content"
+            {currentBoardTitle == "Select a board to see content"
               ? "Choose a board from the list!"
               : `Cards for ${currentBoardTitle}`}
           </h1>
