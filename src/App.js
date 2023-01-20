@@ -106,11 +106,11 @@ function App() {
     });
   };
 
-  const getAllCards = () => {
-    getAllCardsApi().then((cards) => {
-      setCardData(cards);
-    });
-  };
+  // const getAllCards = () => {
+  //   getAllCardsApi().then((cards) => {
+  //     setCardData(cards);
+  //   });
+  // };
 
   useEffect(() => {
     // data fetching code
@@ -144,7 +144,7 @@ function App() {
     getAllCardsApi(currentBoardID)
       .then((boardData) => {
         //might need to change from map to another iterator that doesn't return object
-        boardData.cards.map((card) => {
+        boardData.cards.each((card) => {
           deleteCard(card.card_id);
         });
       });
@@ -215,20 +215,7 @@ function App() {
           <h1>New Board Form</h1>
           <NewBoardForm handleBoardSubmit={handleBoardSubmit}></NewBoardForm>
         </section>
-        {/* {<section className="create-new-card-display">
-          add ternary here
-          currentBoardID ? cards for: {current board title} : select a board to add new cards
-          <h3>
-            {" "}
-            {currentBoardID
-              ? `${currentBoardTitle}`
-              : "Select a board to add new cards"}
-          </h3>
-          <NewCardForm
-            handleCardSubmit={handleCardSubmit}
-            currentBoardID={currentBoardID}
-          />
-        </section>} */}
+
         <section className="create-new-card-display">
           <h1>
             {currentBoardTitle === "Select a board to see content"

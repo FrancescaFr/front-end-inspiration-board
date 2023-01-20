@@ -17,7 +17,7 @@ const NewBoardForm = ({ handleBoardSubmit }) => {
     <form onSubmit={handleSubmitBoard} >
       <div>
         <input type="text" id='title' name="title"
-          value={newBoard} onChange={handleNewBoard} placeholder="Enter New Board Title Here" />
+          value={newBoard} onChange={handleNewBoard} placeholder="Add New Board" />
         <div>
           <input type='submit' value="Submit New Board" />
         </div>
