@@ -201,18 +201,23 @@ function App() {
         <section className="selected-board-display">
           <h1>Selected Board </h1>
           <p id="current-board-name">
-            {/* ternary not working */}
             {currentBoardTitle}
           </p>
           <button onClick={() => deleteBoard()}>Delete Board</button>
+          <div className="create-new-card-display">
+            <NewCardForm
+              handleCardSubmit={handleCardSubmit}
+              currentBoardID={currentBoardID}
+            />
+          </div>
         </section>
         <section className="new-board-form">
           <h1>Create a New Board</h1>
           <NewBoardForm handleBoardSubmit={handleBoardSubmit}></NewBoardForm>
         </section>
-        <section className="create-new-card-display">
-          {/* add ternary here */}
-          {/* currentBoardID ? cards for: {current board title} : select a board to add new cards */}
+        {/* {<section className="create-new-card-display">
+          add ternary here
+          currentBoardID ? cards for: {current board title} : select a board to add new cards
           <h3>
             {" "}
             {currentBoardID
@@ -223,7 +228,7 @@ function App() {
             handleCardSubmit={handleCardSubmit}
             currentBoardID={currentBoardID}
           />
-        </section>
+        </section>} */}
         <section className="cards-container">
           <CardList
             onlikedCard={likedCard}
